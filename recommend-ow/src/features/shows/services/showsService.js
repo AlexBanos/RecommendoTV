@@ -2,7 +2,7 @@ import { tvMazeClient } from '@/services/tvMazeClient';
 import { normalizeShow } from './normalizeShow';
 
 async function fetchAllShows() {
-    const data = await tvMazeClient.request('/shows');
+    const data = await tvMazeClient.request('/shows?page=0');
     return data.map(normalizeShow);
 }
 
