@@ -1,23 +1,105 @@
-# recommend-ow
+# RecommendoTV (recommend-ow)
 
-This template should help get you started developing with Vue 3 in Vite.
+A response Vue 3 application that displays curated TV shows grouped by genre, supports search and provides detailed sho views using the TVMaze API.
 
-## Recommended IDE Setup
+## High-Level Architecture
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+UI Layer (Views + Components)
 
-## Recommended Browser Setup
+-->
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+State Layer (Pinia Stores)
 
-## Customize configuration
+-->
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Service Layer (API abstraction + normalization)
+
+--> 
+
+External API (TVMaze)
+
+## Technology Stack 
+
+* Vue 3 (Composition API)
+* Javascript
+* Pinia (State management)
+* Vue Router
+* Vitest
+* Native Fetch API (due to simple API calls)
+
+Dependencies are intentionally minimal as per the assignment requirements to prioritize clarity and architectural signal.
+
+## Folder Structure
+
+Chose the feature-based structure because it keeps related logic grouped.
+
+```
+src/
+│
+├── app/
+│   ├── router/
+│   └── App.vue
+│
+├── features/
+│   ├── shows/
+│   │   ├── components/
+│   │   ├── views/
+│   │   ├── store/
+│   │   ├── services/
+│   │   └── config/
+│   │
+│   └── search/
+│       ├── components/
+│       └── store/
+│
+├── shared/
+│   ├── components/
+│   ├── composables/
+│   └── utils/
+│
+├── services/
+│   └── apiClient.js
+│
+└── main.js
+```
+## Design Decisions
+### Dashboard Design
+
+Decided to go with curated genres: Action, Comedy, Horror, Sports, Science-Fiction.
+
+Reasons for choosing these select genres over fetching based on TVMaze results.
+
+* TVMaze could return dozens of different genres, which would overload the UI with too many categories. 
+* Ensures a predictable layout
+
+
+### Normalization
+Normalizing the API responses into a consistent internal model, since TVMaze had too many attributes.
+
+#### Model
+```
+{
+  id,
+  name,
+  image,
+  rating,
+  genres,
+  summary,
+  status,
+  runtime,
+  premiered,
+  network
+}
+```
+
+## Routing
+
+```
+/ --> DashboardVie
+/show/:kd --> ShowDetailsView
+```
+To be extended with more if time permits. 
+
 
 ## Project Setup
 
