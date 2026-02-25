@@ -2,6 +2,9 @@
 import { onMounted } from 'vue';
 import { useShowsStore } from '@/features/shows/store/useShowsStore';
 import { showsService } from '@/features/shows/services/showsService';
+
+
+// For Testing the Store and TvMaze API Service 
 showsService.fetchAllShows().then(console.log);
 showsService.searchShows('girls').then(console.log);
 
@@ -9,7 +12,10 @@ const store = useShowsStore();
 
 onMounted(async () => {
     await store.fetchShowDetails(6);
-    console.log(store.getShowById(6))
+    console.log('Show by id: ', store.getShowById(6))
+
+    await store.fetchShowsByGenre('Comedy');
+    console.log('Show by genre', store.getShowsByGenre('Comedy'))
 });
 
 </script>
