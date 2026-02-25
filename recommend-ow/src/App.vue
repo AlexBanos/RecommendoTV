@@ -1,7 +1,17 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useShowsStore } from '@/features/shows/store/useShowsStore';
 import { showsService } from '@/features/shows/services/showsService';
 showsService.fetchAllShows().then(console.log);
 showsService.searchShows('girls').then(console.log);
+
+const store = useShowsStore();
+
+onMounted(async () => {
+    await store.fetchShowDetails(6);
+    console.log(store.getShowById(6))
+});
+
 </script>
 
 <template>
