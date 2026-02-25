@@ -8,14 +8,14 @@ import { showsService } from '@/features/shows/services/showsService';
 showsService.fetchAllShows().then(console.log);
 showsService.searchShows('girls').then(console.log);
 
-const store = useShowsStore();
+const showsStore = useShowsStore();
 
 onMounted(async () => {
-    await store.fetchShowDetails(6);
-    console.log('Show by id: ', store.getShowById(6))
+    await showsStore.fetchShowDetails(1);
+    console.log('Show by id: ', showsStore.showDetails[1])
 
-    await store.fetchShowsByGenre('Comedy');
-    console.log('Show by genre', store.getShowsByGenre('Comedy'))
+    await showsStore.fetchShowsByGenre('Comedy');
+    console.log('Show by genre', showsStore.showsByGenre['Comedy'])
 });
 
 </script>

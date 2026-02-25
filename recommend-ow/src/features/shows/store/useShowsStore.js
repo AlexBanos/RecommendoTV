@@ -1,70 +1,75 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import { showsService } from '../services/showsService';
 
-export const useShowsStore = defineStore('shows', {
-    state: () => ({
-        allShows: [],
-        showsByGenre: {},
-        showDetails: {},
-        loading: false,
-        hasFetchedAll: false,
-    }),
+export const useShowsStore = defineStore('shows', () => {
+    // state
+    const allShows = ref([]);
+    const showsByGenre = ref({});
+    const showDetails = ref({});
+    const loading = ref(false);
+    const error = ref(null);
+    const hasFetchedAll = ref(false);
 
-    getters: {
-        getShowsByGenre: (state) => (genre) => {
-            return state.showsByGenre[genre] || [];
-        },
+    //actions
+    async function fetchAllShows() {
+        if (hasFetchedAll.value) return;
 
-        getShowById: (state) => (id) => {
-            return state.showDetails[id] || null;
-        },
-    },
+        try {
+            loading.value = true;
+            error.value = null;
 
-    actions: {
-        async fetchAllShows() {
-            if (this.hasFetchedAll) return;
+            const shows = await showsService.fetchAllShows();
+            allShows.value = shows;
+            hasFetchedAll.value = true;
+        } catch (err) {
+            error.value = err.message;
+        } finally {
+            loading.value = false;
+        }
+    }
 
-            try {
-                this.loading = true;
-                this.error = null;
+    async function fetchShowsByGenre(genre) {
+        if (showsByGenre.value[genre]) return;
 
-                const shows = await showsService.fetchAllShows();
-                this.allShows = shows;
-                this.hasFetchedAll = true;
-            } catch (err) {
-                this.error = err.message;
-            } finally {
-                this.loading = false;
-            }
-        },
+        if (!hasFetchedAll.value) {
+            await fetchAllShows();
+        }
 
-        async fetchShowsByGenre(genre) {
-            if (this.showsByGenre[genre]) return;
+        const filteredShows = allShows.value
+            .filter((show) => show.genres.includes(genre))
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, 10); // Top 10 results
 
-            if (!this.hasFetchedAll) {
-                await this.fetchAllShows();
-            }
+        showsByGenre.value = { ...showsByGenre.value, [genre]: filteredShows};
+    }
 
-            const filteredShows = this.allShows
-                .filter((show) => show.genres.includes(genre))
-                .sort((a, b) => b.rating - a.rating)
-                .slice(0, 10); // Top 10 results
+    async function fetchShowDetails(id) {
+        if (showDetails.value[id]) return;
 
-            this.showsByGenre[genre] = filteredShows;
-        },
+        try {
+            loading.value = true;
+            const show = await showsService.fetchShowById(id);
+            showDetails.value = {...showDetails.value, [id]: show};
+        } catch (err) {
+            error.value= err.message;
+        } finally {
+            loading.value = false;
+        }
+    }
 
-        async fetchShowDetails(id) {
-            if (this.showDetails[id]) return;
+    return {
+        //state
+        allShows,
+        showsByGenre,
+        showDetails,
+        loading,
+        error,
+        hasFetchedAll,
 
-            try {
-                this.loading = true;
-                const show = await showsService.fetchShowById(id);
-                this.showDetails[id] = show;
-            } catch (err) {
-                this.error = err.message;
-            } finally {
-                this.loading = false;
-            }
-        },
-    },
+        //actions
+        fetchAllShows,
+        fetchShowsByGenre,
+        fetchShowDetails,
+    };
 });
