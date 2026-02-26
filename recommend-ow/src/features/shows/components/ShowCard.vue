@@ -23,7 +23,9 @@
     </router-link>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { showsService } from '../services/showsService';
+
 defineProps({
     show: {
         type: Object,

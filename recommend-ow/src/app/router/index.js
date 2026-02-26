@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import DashboardView from '@/features/shows/views/DashboardView.vue';
 import ShowsDetailsView from '@/features/shows/views/ShowsDetailsView.vue';
 
