@@ -6,14 +6,13 @@
             <RouterView />
         </main>
 
-        <!-- Add footer -->
+        <AppFooter />
     </div>
 </template>
 
 <script setup>
 import AppHeader from '@/shared/components/AppHeader.vue';
-// import footer
+import AppFooter from '@/shared/components/AppFooter.vue';
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
