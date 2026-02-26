@@ -1,27 +1,28 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useShowsStore } from '@/features/shows/store/useShowsStore';
-import { showsService } from '@/features/shows/services/showsService';
-
-
-// For Testing the Store and TvMaze API Service 
-showsService.fetchAllShows().then(console.log);
-showsService.searchShows('girls').then(console.log);
+import ShowRow from './features/shows/components/ShowRow.vue';
+import { FEATURED_GENRES } from './features/shows/config/featuredGenres';
 
 const showsStore = useShowsStore();
 
 onMounted(async () => {
-    await showsStore.fetchShowDetails(1);
-    console.log('Show by id: ', showsStore.showDetails[1])
-
-    await showsStore.fetchShowsByGenre('Comedy');
-    console.log('Show by genre', showsStore.showsByGenre['Comedy'])
+    FEATURED_GENRES.forEach((genre) => {
+        showsStore.fetchShowsByGenre(genre);
+    });
 });
-
 </script>
 
 <template>
-    <h1>You did it!</h1>
+    <h1>TV Shows Dashboard</h1>
+
+    <ShowRow
+        v-for="genre in FEATURED_GENRES"
+        :key="genre"
+        :genre="genre"
+        :shows="showsStore.showsByGenre[genre]"
+    />
+
     <p>
         Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
         documentation
