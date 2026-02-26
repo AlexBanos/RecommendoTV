@@ -26,7 +26,6 @@ import { computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import BaseLoader from '@/shared/components/BaseLoader.vue';
 
-
 const showsStore = useShowsStore();
 
 const props = defineProps({
@@ -42,3 +41,35 @@ onMounted(() => {
     showsStore.fetchShowDetails(props.id);
 });
 </script>
+
+<style scoped>
+.details {
+    padding: 1.5rem;
+}
+
+.details-layout {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.image-section img {
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+.info-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.summary {
+    margin-top: 1.5rem;
+}
+
+.loader-wrapper,
+.error-state {
+    text-align: center;
+    padding: 3rem 0;
+}
+</style>

@@ -48,3 +48,26 @@ function handleSelect(id) {
     router.push(`/shows/${id}`);
 }
 </script>
+
+<style scoped>
+.show-row {
+  margin-bottom: 2rem;
+}
+
+.row-header {
+  margin-bottom: 1rem;
+}
+
+.row-content {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.row-loading,
+.row-empty {
+  padding: 1rem 0;
+  color: #666;
+}
+</style>
