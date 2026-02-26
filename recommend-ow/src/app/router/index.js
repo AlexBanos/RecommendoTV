@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import DashboardView from '@/features/shows/views/DashboardView.vue';
-import ShowsDetailsView from '@/features/shows/views/ShowsDetailsView.vue';
+import ShowDetailsView from '@/features/shows/views/ShowDetailsView.vue';
 
 const routes = [
     {
@@ -10,9 +10,10 @@ const routes = [
         component: DashboardView,
     },
     {
-        path: '/show/:id',
+        path: '/shows/:id',
         name: 'ShowDetails',
-        component: ShowsDetailsView,
+        component: ShowDetailsView,
+        props: true,
     },
 ];
 
