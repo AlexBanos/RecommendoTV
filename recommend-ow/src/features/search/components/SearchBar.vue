@@ -15,25 +15,44 @@
             type="text"
             v-model="localQuery"
             @focus="openDropdown"
+            @keydown.esc.prevent="closeDropdown"
             placeholder="Search shows..."
             class="search-input"
             autocomplete="off"
+            aria-controls="search-results"
+            :aria-expanded="showDropdown"
         />
 
         <div
             v-if="showDropdown"
             id="search-results"
             class="search-dropdown"
-            role="listbox"
         >
-            <ul>
+            <div
+                v-if="loading"
+                class="search-status"
+                role="status"
+            >
+                Searching...
+            </div>
+
+            <div
+                v-else-if="localQuery.trim() && results.length === 0"
+                class="search-status"
+            >
+                No matching shows
+            </div>
+
+            <ul
+                v-else
+                class="search-list"
+            >
                 <li
                     v-for="show in results"
                     :key="show.id"
-                    :id="`search-item-${show.id}`"
-                    role="option"
                 >
                     <button
+                        type="button"
                         class="search-result"
                         @click="selectShow(show.id)"
                     >
@@ -75,7 +94,9 @@ function selectShow(id) {
 }
 
 function openDropdown() {
-    showDropdown.value = true;
+    if (localQuery.value.trim()) {
+        showDropdown.value = true;
+    }
 }
 
 function closeDropdown() {
@@ -89,7 +110,16 @@ function handleClickOutside(event) {
 }
 
 watch(debouncedQuery, (value) => {
-    searchStore.search(value.trim());
+    const query = value.trim();
+
+    if (!query) {
+        searchStore.clear();
+        closeDropdown();
+        return;
+    }
+
+    showDropdown.value = true;
+    searchStore.search(query);
 });
 
 onMounted(() => {
@@ -114,12 +144,14 @@ onBeforeUnmount(() => {
     border-radius: 10px;
     background: var(--surface, #ffffff);
     color: var(--text, #111827);
-    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    transition:
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
 }
 
 .search-input:focus {
     border-color: var(--focus, #1d4ed8);
-    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.18);
+     box-shadow: 0 0 0 3px var(--focus-ring, rgba(29, 78, 216, 0.18));
     outline: none;
 }
 
@@ -146,7 +178,7 @@ onBeforeUnmount(() => {
 
 .search-result {
     width: 100%;
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: space-between;
     gap: 0.7rem;
@@ -164,21 +196,6 @@ onBeforeUnmount(() => {
 .search-result:focus-visible {
     background: var(--surface-alt, #edf2ff);
     outline: none;
-}
-
-.search-result-title {
-    font-size: 0.95rem;
-    line-height: 1.3;
-}
-
-.search-result-rating {
-    flex-shrink: 0;
-    padding: 0.12rem 0.45rem;
-    border-radius: 999px;
-    background: var(--chip-bg, #e6edff);
-    color: var(--chip-text, #1e40af);
-    font-size: 0.75rem;
-    font-weight: 700;
 }
 
 .search-status {

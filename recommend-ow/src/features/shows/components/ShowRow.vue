@@ -132,7 +132,7 @@ const showSwipeHint = computed(() => Array.isArray(props.shows) && props.shows.l
 }
 
 .row-content::-webkit-scrollbar-thumb {
-    background: #c2c7d1;
+    background: var(--border, #c2c7d1);
     border-radius: 999px;
 }
 
