@@ -29,7 +29,7 @@
 import SearchBar from '@/features/search/components/SearchBar.vue';
 import { useTheme } from '../composables/useTheme';
 
-const {isDark, toggleTheme } = useTheme();
+const { isDark, toggleTheme } = useTheme();
 </script>
 
 <style scoped>
@@ -67,6 +67,7 @@ const {isDark, toggleTheme } = useTheme();
     min-width: 220px;
     max-width: 480px;
     margin-left: auto;
+    order: 2;
 }
 
 .theme-toggle {
@@ -79,6 +80,7 @@ const {isDark, toggleTheme } = useTheme();
     font-weight: 700;
     line-height: 1;
     cursor: pointer;
+    order: 3;
 }
 
 .theme-toggle:hover {
@@ -95,13 +97,21 @@ const {isDark, toggleTheme } = useTheme();
         padding: 0.9rem 1rem;
     }
 
-    .search-container {
-        min-width: 100%;
-        max-width: none;
+    .logo {
+        order: 1;
     }
 
     .theme-toggle {
+        order: 2;
         margin-left: auto;
+    }
+
+    .search-container {
+        order: 3;
+        margin-left: 0;
+        flex-basis: 100%;
+        min-width: 100%;
+        max-width: none;
     }
 }
 </style>
