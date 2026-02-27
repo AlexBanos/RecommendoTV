@@ -17,15 +17,21 @@ import AppFooter from '@/shared/components/AppFooter.vue';
 
 <style scoped>
 .app-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .app-content {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
+    flex: 1;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    .app-content {
+        padding: 1rem;
+    }
 }
 </style>
