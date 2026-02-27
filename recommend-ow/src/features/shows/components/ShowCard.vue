@@ -102,8 +102,6 @@ defineProps({
     line-height: 1.35;
     min-height: 2.6em;
     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
     overflow: hidden;
 }
 
