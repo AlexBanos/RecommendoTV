@@ -17,7 +17,6 @@
                 v-for="show in shows"
                 :key="show.id"
                 :show="show"
-                @click="handleSelect(show.id)"
             />
         </div>
     </section>
@@ -25,8 +24,6 @@
 
 <script setup>
 import ShowCard from './ShowCard.vue';
-import { useRouter } from 'vue-router';
-
 const props = defineProps({
     genre: {
         type: String,
@@ -41,12 +38,6 @@ const props = defineProps({
         default: false,
     },
 });
-
-const router = useRouter();
-
-function handleSelect(id) {
-    router.push(`/shows/${id}`);
-}
 </script>
 
 <style scoped>

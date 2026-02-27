@@ -1,6 +1,6 @@
 <template>
     <router-link
-        :to="`/show/${show.id}`"
+        :to="{ name: 'ShowDetails', params: { id: show.id } }"
         class="show-card"
         :aria-label="`View details for ${show.name}`"
     >
@@ -9,7 +9,7 @@
                 <img
                     v-if="show.image"
                     :src="show.image"
-                    :alt="showsService.name"
+                    :alt="`Poster of ${show.name}`"
                 />
                 <div
                     v-else
@@ -37,8 +37,6 @@
 </template>
 
 <script setup>
-import { showsService } from '../services/showsService';
-
 defineProps({
     show: {
         type: Object,
