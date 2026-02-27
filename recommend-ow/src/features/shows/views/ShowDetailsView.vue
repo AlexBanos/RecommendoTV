@@ -1,5 +1,5 @@
 <template>
-    <main
+    <section
         v-if="show"
         class="details"
     >
@@ -14,9 +14,17 @@
         <p><strong>Rating:</strong> {{ show.rating }}</p>
         <p><strong>Genres:</strong> {{ show.genres.join(', ') }}</p>
         <p v-html="show.summary" />
-    </main>
+    </section>
 
-    <BaseLoader v-else-if="storeToRefs.loading" />
+    <BaseLoader v-else-if="loading" />
+
+    <p
+        v-else-if="error"
+        class="error"
+    >
+        Failed to load show details
+    </p>
+
     <p v-else>Show not found.</p>
 </template>
 
@@ -27,6 +35,7 @@ import { storeToRefs } from 'pinia';
 import BaseLoader from '@/shared/components/BaseLoader.vue';
 
 const showsStore = useShowsStore();
+const { loading } = storeToRefs(showsStore);
 
 const props = defineProps({
     id: {

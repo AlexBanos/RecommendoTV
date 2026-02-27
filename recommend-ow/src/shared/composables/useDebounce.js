@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue'
 
-export function useDebounce(source, delay = 400) {
+export function useDebounce(source, delay = 1000) {
   const debounced = ref(source.value)
 
   let timeout

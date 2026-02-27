@@ -14,7 +14,6 @@
             id="search-input"
             type="text"
             v-model="localQuery"
-            @input="handleInput"
             @focus="openDropdown"
             placeholder="Search shows..."
             class="search-input"
@@ -23,28 +22,16 @@
 
         <div
             v-if="showDropdown"
+            id="search-results"
             class="search-dropdown"
             role="listbox"
         >
-            <div
-                v-if="loading"
-                class="search-status"
-                role="status"
-            >
-                Searching...
-            </div>
-
-            <div
-                v-else-if="results.length === 0 && localQuery"
-                class="search-status"
-            >
-                No results found
-            </div>
-
-            <ul v-else>
+            <ul>
                 <li
                     v-for="show in results"
                     :key="show.id"
+                    :id="`search-item-${show.id}`"
+                    role="option"
                 >
                     <button
                         class="search-result"
@@ -59,9 +46,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSearchStore } from '../store/useSearchStore';
+import { useDebounce } from '@/shared/composables/useDebounce';
 
 const searchStore = useSearchStore();
 const router = useRouter();
@@ -73,9 +61,7 @@ const wrapper = ref(null);
 const results = computed(() => searchStore.results);
 const loading = computed(() => searchStore.loading);
 
-function handleInput() {
-    searchStore.search(localQuery.value);
-}
+const debouncedQuery = useDebounce(localQuery, 350);
 
 function selectShow(id) {
     router.push({
@@ -101,6 +87,10 @@ function handleClickOutside(event) {
         closeDropdown();
     }
 }
+
+watch(debouncedQuery, (value) => {
+    searchStore.search(value.trim());
+});
 
 onMounted(() => {
     document.addEventListener('click', handleClickOutside);

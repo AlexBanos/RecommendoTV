@@ -12,7 +12,7 @@ async function fetchShowById(id) {
 }
 
 async function searchShows(query) {
-    const data = await tvMazeClient.request(`/search/shows?q=${query}`);
+    const data = await tvMazeClient.request(`/search/shows?q=${encodeURIComponent(query)}`);
     return data.map((result) => normalizeShow(result.show));
 }
 
