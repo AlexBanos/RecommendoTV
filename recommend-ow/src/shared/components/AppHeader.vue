@@ -11,12 +11,25 @@
             <div class="search-container">
                 <SearchBar />
             </div>
+
+            <button
+                type="button"
+                class="theme-toggle"
+                :aria-pressed="isDark"
+                :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+                @click="toggleTheme"
+            >
+                {{ isDark ? 'Light' : 'Dark' }}
+            </button>
         </div>
     </header>
 </template>
 
 <script setup>
 import SearchBar from '@/features/search/components/SearchBar.vue';
+import { useTheme } from '../composables/useTheme';
+
+const {isDark, toggleTheme } = useTheme();
 </script>
 
 <style scoped>
@@ -56,6 +69,27 @@ import SearchBar from '@/features/search/components/SearchBar.vue';
     margin-left: auto;
 }
 
+.theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 0.42rem 0.78rem;
+    font: inherit;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    background: var(--surface-alt);
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+}
+
 @media (max-width: 640px) {
     .header-inner {
         padding: 0.9rem 1rem;
@@ -64,6 +98,10 @@ import SearchBar from '@/features/search/components/SearchBar.vue';
     .search-container {
         min-width: 100%;
         max-width: none;
+    }
+
+    .theme-toggle {
+        margin-left: auto;
     }
 }
 </style>
