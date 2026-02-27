@@ -41,7 +41,7 @@ export const useShowsStore = defineStore('shows', () => {
             .sort((a, b) => b.rating - a.rating)
             .slice(0, 10); // Top 10 results
 
-        showsByGenre.value = { ...showsByGenre.value, [genre]: filteredShows};
+        showsByGenre.value = { ...showsByGenre.value, [genre]: filteredShows };
     }
 
     async function fetchShowDetails(id) {
@@ -49,10 +49,11 @@ export const useShowsStore = defineStore('shows', () => {
 
         try {
             loading.value = true;
+            error.value = null;
             const show = await showsService.fetchShowById(id);
-            showDetails.value = {...showDetails.value, [id]: show};
+            showDetails.value = { ...showDetails.value, [id]: show };
         } catch (err) {
-            error.value= err.message;
+            error.value = err.message;
         } finally {
             loading.value = false;
         }

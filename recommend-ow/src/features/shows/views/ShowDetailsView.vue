@@ -30,12 +30,12 @@
 
 <script setup>
 import { useShowsStore } from '../store/useShowsStore';
-import { computed, onMounted } from 'vue';
+import { computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import BaseLoader from '@/shared/components/BaseLoader.vue';
 
 const showsStore = useShowsStore();
-const { loading } = storeToRefs(showsStore);
+const { loading, error } = storeToRefs(showsStore);
 
 const props = defineProps({
     id: {
@@ -46,9 +46,13 @@ const props = defineProps({
 
 const show = computed(() => showsStore.showDetails[props.id]);
 
-onMounted(() => {
-    showsStore.fetchShowDetails(props.id);
-});
+watch(
+    () => props.id,
+    (id) => {
+        showsStore.fetchShowDetails(props.id);
+    },
+    { immediate: true },
+);
 </script>
 
 <style scoped>
