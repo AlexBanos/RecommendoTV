@@ -1,7 +1,7 @@
 <template>
     <div
-        class="search-wrapper"
         ref="wrapper"
+        class="search-wrapper"
     >
         <label
             for="search-input"

@@ -45,9 +45,25 @@ import SearchBar from '@/features/search/components/SearchBar.vue';
     letter-spacing: 0.2px;
 }
 
+.logo:focus-visible {
+    border-radius: 8px;
+}
+
 .search-container {
     flex: 1;
     min-width: 220px;
     max-width: 480px;
+    margin-left: auto;
+}
+
+@media (max-width: 640px) {
+    .header-inner {
+        padding: 0.9rem 1rem;
+    }
+
+    .search-container {
+        min-width: 100%;
+        max-width: none;
+    }
 }
 </style>

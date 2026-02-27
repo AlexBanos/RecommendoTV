@@ -1,58 +1,45 @@
 <template>
     <footer class="app-footer">
         <div class="footer-inner">
-            <nav
-                aria-label="Footer Navigation"
-                class="footer-nav"
+            <router-link
+                to="/"
+                class="footer-brand"
             >
-                <ul>
-                    <li>
-                        <router-link to="/">Home</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/">Genres</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/">Top Rated</router-link>
-                    </li>
-                </ul>
-            </nav>
-
-            <p class="footer-meta">
-                Data provided by TVMaze API.
-            </p>
+                RecommendoTV
+            </router-link>
+            <p class="footer-meta">Data provided by TVMaze API.</p>
         </div>
     </footer>
 </template>
 
 <style scoped>
 .app-footer {
-  border-top: 1px solid #e5e5e5;
-  background: #fafafa;
+    border-top: 1px solid var(--border, #d0d5dd);
+    background: var(--surface, #ffffff);
 }
 
 .footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.15rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.footer-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1rem;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-nav a {
-  text-decoration: none;
-  color: inherit;
-  font-size: 0.9rem;
+.footer-brand {
+    text-decoration: none;
+    color: var(--text, #111827);
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
 }
 
 .footer-meta {
-  font-size: 0.85rem;
-  color: #666;
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--muted, #64748b);
 }
 </style>
