@@ -12,6 +12,7 @@
                 :shows="showsStore.showsByGenre[genre]"
             />
         </section>
+        <p v-if="showsStore.error" class="error">Failed to load shows.</p>
 
         <p v-if="!showsStore.loading && !hasData">No shows available.</p>
     </main>

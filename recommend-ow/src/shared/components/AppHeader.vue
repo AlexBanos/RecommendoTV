@@ -21,8 +21,12 @@ import SearchBar from '@/features/search/components/SearchBar.vue';
 
 <style scoped>
 .app-header {
-    border-bottom: 1px solid #e5e5e5;
-    background: white;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 20;
 }
 
 .header-inner {
@@ -30,23 +34,20 @@ import SearchBar from '@/features/search/components/SearchBar.vue';
     margin: 0 auto;
     padding: 1rem 1.5rem;
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
-}
-
-.logo {
-    text-decoration: none;
-    color: inherit;
 }
 
 .logo-text {
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
 }
 
 .search-container {
     flex: 1;
-    max-width: 400px;
+    min-width: 220px;
+    max-width: 480px;
 }
 </style>

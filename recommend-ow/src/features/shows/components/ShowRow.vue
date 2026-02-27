@@ -41,24 +41,15 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.show-row {
-  margin-bottom: 2rem;
-}
-
-.row-header {
-  margin-bottom: 1rem;
-}
-
 .row-content {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
+  scroll-snap-type: x mandatory;
 }
 
-.row-loading,
-.row-empty {
-  padding: 1rem 0;
-  color: #666;
+.row-content > * {
+  scroll-snap-align: start;
 }
 </style>

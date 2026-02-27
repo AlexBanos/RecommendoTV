@@ -22,7 +22,7 @@
         v-else-if="error"
         class="error"
     >
-        Failed to load show details
+        Failed to load show details.
     </p>
 
     <p v-else>Show not found.</p>
